@@ -28,6 +28,8 @@ This file tracks every prompt provided during the development of the PlayVerse g
 15. **push code to git https://github.com/ishankum/PlayVerse.git**
 16. **ok i approve your Imlementation Plan Push Git** (Approval to push to GitHub)
 17. **Please create a promt history tracking file and add all promts I have provided for building gaming platform and also update future prompts as well to tracking**
+18. **Suggest me how we can deploy this for free**
+19. **No dont sweat**
 
 ---
 
