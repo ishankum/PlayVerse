@@ -1,0 +1,30 @@
+# .gitignore for PlayVerse (Angular + .NET 9)
+
+# Standard .NET / VS core
+bin/
+obj/
+*.user
+*.suo
+*.sln.docstates
+.vs/
+
+# Angular specific
+node_modules/
+.angular/
+dist/
+/src/styles.css.map
+/src/app/**/*.spec.ts
+
+# User specific / local
+.env
+appsettings.Local.json
+*.log
+
+# Windows specific
+Thumbs.db
+desktop.ini
+
+# Deployment
+.publish/
+*.apk
+*.zip
