@@ -1,0 +1,73 @@
+<div class="nav-bar">
+  <div class="logo">
+    <h2 class="text-gradient" style="margin: 0; font-weight: 900; letter-spacing: 2px;">⚡ PLAYVERSE</h2>
+  </div>
+  
+  <div class="auth-section">
+    <ng-container *ngIf="!(authConfig.userContext$ | async); else loggedIn">
+      <button class="btn btn-secondary" (click)="playGuest()">Play as Guest</button>
+    </ng-container>
+    <ng-template #loggedIn>
+      <div style="display: flex; align-items: center; gap: 15px;">
+        <span style="font-weight: 600; color: var(--accent-secondary)">
+          User: {{(authConfig.userContext$ | async)?.username}}
+        </span>
+        <button class="btn btn-secondary" (click)="logout()">Logout</button>
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<div class="container">
+  
+  <!-- AUTHENTICATION FORM -->
+  <div *ngIf="!(authConfig.userContext$ | async) && !selectedGame" class="glass-panel" style="max-width: 400px; margin: 40px auto; text-align: center;">
+    <h3>{{ isLoginActive ? 'Login to Portal' : 'Register Account' }}</h3>
+    <br>
+    
+    <input type="text" [(ngModel)]="usernameInput" placeholder="Username" style="margin-bottom: 15px;">
+    <input type="password" [(ngModel)]="passwordInput" placeholder="Password" style="margin-bottom: 25px;">
+    
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <button *ngIf="isLoginActive" class="btn btn-primary" (click)="login()">Login Securely</button>
+      <button *ngIf="!isLoginActive" class="btn btn-primary" (click)="register()">Confirm Registration</button>
+      
+      <p style="cursor: pointer; font-size: 0.9em; margin-top: 15px; text-decoration: underline;" 
+         (click)="isLoginActive = !isLoginActive">
+        {{ isLoginActive ? 'Need an account? Register' : 'Already have one? Login' }}
+      </p>
+    </div>
+  </div>
+
+  <!-- GAMES GRID PORTAL -->
+  <div *ngIf="(authConfig.userContext$ | async) && !selectedGame">
+    <h1 class="text-gradient">Select your Game</h1>
+    <p>Choose an experience and conquer the leaderboards.</p>
+    <br>
+    
+    <div class="game-grid">
+      <div class="glass-panel game-card" *ngFor="let g of games" (click)="selectGame(g.id)">
+        <h3 class="text-gradient">{{ g.name }}</h3>
+        <p class="category">Category: <span>{{ g.category }}</span></p>
+        <p class="description">{{ g.description }}</p>
+        <button class="btn btn-secondary">Play Now</button>
+      </div>
+      
+      <div *ngIf="games.length === 0">
+        <p>Loading games available directly from Playverse API...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME CONTAINER -->
+  <div *ngIf="selectedGame">
+    <button class="btn btn-secondary" (click)="backToPortal()" style="margin-bottom: 20px;">← Back to Portal</button>
+    
+    <div class="glass-panel" style="padding: 0; overflow: hidden; border: 2px solid var(--accent-primary);">
+      <app-snake-game *ngIf="selectedGame === 'snake'"></app-snake-game>
+      <app-tictactoe-game *ngIf="selectedGame === 'tictactoe'"></app-tictactoe-game>
+      <app-brick-arrange *ngIf="selectedGame === 'brick-arrange'"></app-brick-arrange>
+    </div>
+  </div>
+  
+</div>
